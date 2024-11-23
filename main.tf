@@ -9,7 +9,7 @@ resource "aws_vpc" "login_vpc" {
 
 resource "aws_subnet" "login_fe_subnet" {
     vpc_id = aws_vpc.login_vpc.id
-    cidr_block = "10.0.0.0/24"
+    cidr_block = "10.0.1.0/24"
     availability_zone = "ap-southeast-2a"
     map_public_ip_on_launch = "true"
 
@@ -20,18 +20,18 @@ resource "aws_subnet" "login_fe_subnet" {
 
 resource "aws_subnet" "login_be_subnet" {
     vpc_id = aws_vpc.login_vpc.id
-    cidr_block = "10.0.0.0/24"
+    cidr_block = "10.0.2.0/24"
     availability_zone = "ap-southeast-2b"
     map_public_ip_on_launch = "true"
 
     tags = {
-        name = "login_backend_subnet
+        name = "login_backend_subnet"
     }
 }
 
 resource "aws_subnet" "login_db_subnet" {
     vpc_id = aws_vpc.login_vpc.id
-    cidr_block = "10.0.0.0/24"
+    cidr_block = "10.0.3.0/24"
     availability_zone = "ap-southeast-2c"
     map_public_ip_on_launch = "false"
 
@@ -49,7 +49,7 @@ resource "aws_internet_gateway" "login_igw" {
 }
 
 resource "aws_route_table" "public_rwt_table" {
-    vpc_id = "aws_vpc.login_vpc.id
+    vpc_id = aws_vpc.login_vpc.id
 
     route {
         cidr_block = "0.0.0.0/0"
@@ -63,10 +63,6 @@ resource "aws_route_table" "public_rwt_table" {
 
 resource "aws_route_table" "private_rwt_table" {
     vpc_id = aws_vpc.login_vpc.id
-
-    route {
-        gateway_id = aws_internet_gateway.login_igw.id
-    }
 
     tags = {
         name = "private_route_table"
