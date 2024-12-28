@@ -1,0 +1,6 @@
+*.tfstate
+*.tfstate.*
+provider.tf
+*.terraform
+.terraform
+.terraform.*
